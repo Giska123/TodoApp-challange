@@ -1,262 +1,194 @@
-import { useState, useEffect} from 'react'
-import CardActivity from '../component/CardActivity'
-import DeleteModal from '../component/DeleteModal';
-import AddTodo from '../component/AddTodo';
-import TodoEdit from '../component/TodoEdit'
-import axios from 'axios';
-import { BsSortDownAlt, BsSortUpAlt, BsSortAlphaDownAlt, BsSortAlphaUpAlt } from "react-icons/bs";
-import { FiCheck } from "react-icons/fi";
-import { TbArrowsSort } from "react-icons/tb";
+import { useState, useEffect } from "react";
+import CardActivity from "../component/CardActivity";
+import axios from "axios";
 
 function MainActivity() {
-
   const [activities, setActivities] = useState([]);
   const [formValues, setFormValues] = useState({});
-  const [isTask, setIsTask] = useState([])
-  const [editValues, setEditValues] = useState({});
-  const [isDelete, setIsDelete] = useState([])
-  const [isEditTask, setIsEditTask] = useState(false)
-  const [isModal, setIsModal] = useState(false);
-  const [isAddTodo, setIsAddTodo] = useState(false)
-  const [sortBy, setSortBy] = useState('');
-  const [isDropDown, setIsDropDown] = useState('');
+  const [isSetTheme, setIsSetTheme] = useState(false)
 
-  const latest = <BsSortDownAlt />;
-  const oldest = <BsSortUpAlt />;
-  const descending = <BsSortAlphaUpAlt  />;
-  const ascending = <BsSortAlphaDownAlt />;
-  const unfinished = <TbArrowsSort  />;
+  const axiosInstance = axios.create({
+    baseURL: "http://localhost:8004",
+  });
 
-  const sortOptions = [
-    { title: 'Latest', sortBy: 'latest', img: latest },
-    { title: 'Oldest', sortBy: 'oldest', img: oldest },
-    { title: 'A-Z', sortBy: 'descending', img: descending },
-    { title: 'Z-A', sortBy: 'ascending', img: ascending },
-    { title: 'Unfinished', sortBy: 'unfinished', img: unfinished },
-  ];
-  
-const axiosInstance = axios.create({
-  baseURL: 'http://localhost:8001',
-});
-
-async function fetchDetails() {
-  const { data } = await axiosInstance.get('/activity/')
-    setActivities(data)
-};
+  async function fetchDetails() {
+    const { data } = await axiosInstance.get("/activity/");
+    setActivities(data);
+  }
 
   useEffect(() => {
     fetchDetails();
-  },[])
+  }, []);
 
-  
   function handleChangeTodo(e) {
     const name = e.target.name;
     const value = e.target.value;
-  
-    setFormValues({...formValues, [name]:value});
+
+    setFormValues({ ...formValues, [name]: value });
   }
 
-  function handleSubmitTodo(e) {
-    e.preventDefault();
+  function handleKeyPress(e) {
 
     const json2 = JSON.stringify({
       id: '',
-      task : formValues.activity,
-      date: formValues.date,
-      time: formValues.time,
-      priority : formValues.priority
+      task : formValues.activity
     });
 
-    fetch('http://localhost:8001/activity', {
-      method: 'POST',
-      body: json2,
-      headers: {
-        "Content-type": "application/json"
-      },
-    })
-
-      .then((response) => {
-        if (response.status !== 201) {
-          return;
-        } else {
-          return response.json();
-        }
+    if(e.key === 'Enter') {
+      fetch("http://localhost:8004/activity", {
+        method: "POST",
+        body: json2,
+        headers: {
+          "Content-type": "application/json",
+        },
       })
-
-      .then((data) => {
-        setActivities([...activities, data]);
-        fetchDetails();
-      })
-    };
-
-
-  function showModal(id) {
-    setIsModal(true);
-    setIsDelete(id);
+        .then((response) => {
+          if (response.status !== 201) {
+              return;
+          } else {
+              return response.json();
+          }
+        })
+        .then((data) => {
+          setActivities([...activities, data]);
+          fetchDetails();
+        })
+    }
   }
 
+
   const deleteActivity = (id) => {
-    fetch(`http://localhost:8001/activity/${id}`, {
+    fetch(`http://localhost:8004/activity/${id}`, {
       method: "DELETE",
       headers: {
-        'Content-type': 'application/json'
-      }
+        "Content-type": "application/json",
+      },
     })
-
       .then((response) => {
-        fetchDetails(response)
+        fetchDetails(response);
       })
-       .then (() => {
-          setIsModal(false)
-       } )
   };
 
 
-  async function handleOnChange(e) {
-    setEditValues({ 
-      ...editValues,  [e.target.name] : e.target.value});
+  function switchTheme() {
+  setIsSetTheme(!isSetTheme)
   }
-  
-  async function handleEdit(id) {
-    setIsEditTask(true);
-    setIsTask(id)
-    fetchDetails()
-}
 
-async function updateActivity(id) {
-  const response = await axiosInstance.get(`/activity/${id}`);
- 
-  const updatedActivity = {...response.data, ...editValues};
+  const dataResult = 
+  activities.filter(task => task.id).length;
 
-  await axiosInstance.put(`/activity/${id}`, updatedActivity);
+  function sortByActive(){
+    setActivities([...activities].sort((a, b) => !b.done - !a.done));
+  }
 
-  setActivities({...activities, updatedActivity});
+  function sortByCompleted(){
+    setActivities([...activities].sort((a, b) => b.done - a.done));
+  }
 
-  fetchDetails();
-  setIsEditTask(false);
-}
+  function sortByAll(){
+    setActivities([...activities].sort((a, b) => a.id - b.id));
+  }
 
-  const EditTask = () =>
-  isEditTask && 
-    <TodoEdit 
-    isTask={isTask}
-    setIsEditTask={setIsEditTask} 
-    handleOnChange={handleOnChange} 
-    updateActivity={updateActivity}/> 
-  
+  function clearCompleted(){
+    const completed = [...activities].filter(task => task.done)
+    completed.map(tasks => 
+    fetch(`http://localhost:8004/activity/${tasks.id}`, {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+    })
+    .then(response => response.json())
+    .then(data =>{
+      setActivities(completed)
+      fetchDetails()
+    })
+  ) 
+  }
 
-  const AddNewTask = () =>
-  isAddTodo && 
-      <AddTodo
-      setIsAddTodo={setIsAddTodo}
-      handleChangeTodo={handleChangeTodo}
-      handleSubmitTodo={handleSubmitTodo}/> 
-  
-  
-  useEffect(() => {
+  const spans = document.querySelectorAll("span");
 
-    function handleSort() {
-      const newItems = [...activities];
-      switch (sortBy) {
-        case 'latest':
-          return newItems.sort((a, b) => b.id - a.id);
-        case 'oldest':
-          return newItems.sort((a, b) => a.id - b.id);
-        case 'descending':
-          return newItems.sort((a, b) =>
-            a.task.toUpperCase() < b.task.toUpperCase() ? -1 : 1
-          );
-        case 'ascending':
-          return newItems.sort((a, b) =>
-            a.task.toUpperCase() < b.task.toUpperCase() ? 1 : -1
-          );
-        case 'unfinished':
-          // return newItems.filter(act => !act.done);
-          return newItems.sort((a, b) => !b.done - !a.done);
-        default:
-          return newItems;
-      }
-    }
-
-    setActivities(handleSort());
-    
-  }, [sortBy]);
-
-
-  const sortTodo = () =>
-  <div className="todo__actions">
-        {activities.length > 0 && (
-          <div className="actions__container">
-            <button
-              className='sort-btn'
-              onClick={() => setIsDropDown((prevState) => !prevState)}>
-              <TbArrowsSort className='icon'/>
-            </button>
-            {isDropDown && (
-              <div className="sort__options">
-                <ul>
-                  {sortOptions.map((option) => (
-                    <li
-                      onClick={() => {
-                        setSortBy(option.sortBy);
-                        setIsDropDown(false);
-                      }}
-                      key={option.title}>
-                      {option.img} &nbsp;&nbsp;
-                      {option.title}
-                      {sortBy === option.sortBy && (
-                        <FiCheck
-                          alt="checked"
-                          className="image__checklist"
-                        />
-                      )}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-          </div>
-        )}
-  </div>
+  for (const span of spans) {
+      span.addEventListener("click", function() {
+          for (const otherSpan of spans) {
+              otherSpan.classList.remove("active");
+          }
+          this.classList.add("active");
+      });
+  }
 
   return (
     <div>
-      <div id="main">
-        <div className="activity-head">
-          <h1 data-cy="activity-title">Hello, </h1>
 
-          <div className='action-detail'>
-          {sortTodo()}
-          <button type="button" className="btn-tambah" data-cy="activity-add-button" 
-              onClick={() => {setIsAddTodo(true)}}>
-              + Add</button>
-          </div>
-        </div>
-
-        <div className="activity-main">
-          {activities && Object.values(activities).map((item , index) => 
-              <CardActivity
-                key={index}
-                item={item}
-                id={item.id}
-                task={item.task} 
-                date={item.date}
-                time={item.time}
-                priority={item.priority}
-                activities={activities}
-                setActivities={setActivities}
-                fetchDetails={fetchDetails}
-                handleEdit={handleEdit}
-                showModal={showModal}/>)
-          }
-        </div>
-
+      <div id="header"  className={isSetTheme ? "dark" : ""}>
+        <h1 data-cy="activity-title">Todo </h1>
+        <button className="icon-switch" onClick={switchTheme}>
+          {isSetTheme ?
+            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26">
+              <path
+                fill="#FFF"
+                fillRule="evenodd"
+                d="M13 21a1 1 0 011 1v3a1 1 0 11-2 0v-3a1 1 0 011-1zm-5.657-2.343a1 1 0 010 1.414l-2.121 2.121a1 1 0 01-1.414-1.414l2.12-2.121a1 1 0 011.415 0zm12.728 0l2.121 2.121a1 1 0 01-1.414 1.414l-2.121-2.12a1 1 0 011.414-1.415zM13 8a5 5 0 110 10 5 5 0 010-10zm12 4a1 1 0 110 2h-3a1 1 0 110-2h3zM4 12a1 1 0 110 2H1a1 1 0 110-2h3zm18.192-8.192a1 1 0 010 1.414l-2.12 2.121a1 1 0 01-1.415-1.414l2.121-2.121a1 1 0 011.414 0zm-16.97 0l2.121 2.12A1 1 0 015.93 7.344L3.808 5.222a1 1 0 011.414-1.414zM13 0a1 1 0 011 1v3a1 1 0 11-2 0V1a1 1 0 011-1z"
+              />
+            </svg> :
+            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26">
+            <path 
+            fill="#FFF" 
+            fillRule="evenodd" 
+            d="M13 0c.81 0 1.603.074 2.373.216C10.593 1.199 7 5.43 7 10.5 7 16.299 11.701 21 17.5 21c2.996 0 5.7-1.255 7.613-3.268C23.22 22.572 18.51 26 13 26 5.82 26 0 20.18 0 13S5.82 0 13 0z"/></svg>}
+          </button> 
       </div>
 
-      <DeleteModal isModal={isModal} isDelete={isDelete} setIsModal={setIsModal}  deleteActivity={deleteActivity}/>
-      {AddNewTask()}
-      {EditTask()}
+      <div id="main" className={isSetTheme ? "dark" : ""}>
 
+        <div className="activity-wrap">
+
+          <div className='activity-head'>
+            <label className='checkbox-disable'>
+                <input className='check' type="checkbox" />
+                <span className="checkmark" ></span>
+            </label>
+
+            <input
+            type='text' 
+            className='text-task' 
+            name='activity'
+            placeholder="Create a new a todo.."
+            autoFocus
+            onKeyPress={(e) => handleKeyPress(e)}
+            onChange={(e) => handleChangeTodo(e)}/> 
+          </div>
+
+          <ul className='activity-main'>
+              {activities && Object.values(activities).map((item , index) => 
+                <CardActivity
+                  key={index}
+                  index={index}
+                  item={item}
+                  id={item.id} 
+                  activities={activities}
+                  setActivities={setActivities}
+                  isSetTheme={isSetTheme}
+                  fetchDetails={fetchDetails}
+                  deleteActivity={deleteActivity}/>)
+                }
+          </ul>
+                
+
+          <div className='activity-footer'>
+                <span style={{ cursor: 'none', pointerEvents: 'none'}}>{dataResult} Items Left</span>
+                <div className='btn-sort'>
+                <div className="span-sort">
+                  <span onClick={() => sortByAll()}>All</span>
+                  <span onClick={() => sortByActive()}>Active</span>
+                  <span onClick={() => sortByCompleted()}>Completed</span>
+                </div>
+                </div>
+                <span onClick={() => clearCompleted()}> Clear Completed</span>
+          </div>
+        </div>
+          
+          <span className="note"> Drag and drop to reorder list </span>
+          
+      </div>
     </div>
   );
 }

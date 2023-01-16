@@ -1,3 +1,4 @@
+ @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&display=swap');
 
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -24,12 +25,20 @@ html, body {
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: 'Josefin Sans', sans-serif;
+  font-weight: 400, 700;
+  font-size: 18px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+button {
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+}
+
 
 * {
   box-sizing: border-box;
@@ -41,4 +50,22 @@ body {
   --grey-color: #e5e5e5;
   --red-color: #ed4c5c;
   --disabled-color: #888;
+
+  --veryLightGray-color: hsl(0, 0%, 98%);
+  --lightGrayishDay-color: hsl(236, 33%, 92%);
+  --veryLightGrayishBlueDay-color: hsl(236, 33%, 92%);
+  --darkGrayDay-color: hsl(233, 11%, 84%) ;
+  --veryDarkGrayishBlueDay-color: hsl(235, 19%, 35%);
+
+  --lightGrayBlueNight: hsl(234, 39%, 85%) ;
+  --darkGrayBLueNight-color:hsl(237, 14%, 26%);
+  --veryDarkGrayBlueNight-color: hsl(235, 21%, 11%);
+  --darkGrayishBlueNight-color: hsl(234, 11%, 52%);
+  --veryDarkGrayishBlueNight-color: hsl(237, 14%, 26%);
+  --veryDarkGrayishBlueNight2-color: hsl(233, 14%, 35%);
+
+  --lightGrayishBlueHover-color: hsl(236, 33%, 92%);
+
+  --blueHover-color: hsl(220, 98%, 61%);
+ 
 }
