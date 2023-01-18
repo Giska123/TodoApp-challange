@@ -1,0 +1,17 @@
+{
+    "builds": [
+      {
+        "src": "package.json",
+        "use": "npm run build"
+      }
+    ],
+    "env": {
+        "JSON_SERVER_PORT": "8004"
+    },
+    "routes": [
+      {
+        "src": "api/(.*)",
+        "dest": "/api/$1"
+      }
+    ]
+}

@@ -7,12 +7,8 @@ function MainActivity() {
   const [formValues, setFormValues] = useState({});
   const [isSetTheme, setIsSetTheme] = useState(false)
 
-  const axiosInstance = axios.create({
-    baseURL: "http://localhost:8004",
-  });
-
   async function fetchDetails() {
-    const { data } = await axiosInstance.get("/activity/");
+    const { data } = await axios.get('/api/data');
     setActivities(data);
   }
 
@@ -35,7 +31,7 @@ function MainActivity() {
     });
 
     if(e.key === 'Enter') {
-      fetch("http://localhost:8004/activity", {
+      fetch('/api/data', {
         method: "POST",
         body: json2,
         headers: {
@@ -58,7 +54,7 @@ function MainActivity() {
 
 
   const deleteActivity = (id) => {
-    fetch(`http://localhost:8004/activity/${id}`, {
+    fetch(`/api/data/${id}`, {
       method: "DELETE",
       headers: {
         "Content-type": "application/json",
@@ -92,7 +88,7 @@ function MainActivity() {
   function clearCompleted(){
     const completed = [...activities].filter(task => task.done)
     completed.map(tasks => 
-    fetch(`http://localhost:8004/activity/${tasks.id}`, {
+    fetch(`/api/data/${tasks.id}`, {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
     })

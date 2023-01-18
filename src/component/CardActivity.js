@@ -5,10 +5,10 @@ function CardActivity({index, item, id, activities, setActivities, isSetTheme, f
 
 
     async function updateCheck() {
-      const response = await axios.get(`http://localhost:8004/activity/${id}`);
+      const response = await axios.get(`/api/data/${id}`);
       const item = response.data;
       const updatedCheck = { ...item, done: !item.done };
-      await axios.put(`http://localhost:8004/activity/${id}`, updatedCheck);
+      await axios.put(`/api/data/${id}`, updatedCheck);
       setActivities(
         activities.map(el => (el.id === id ? updatedCheck : el))
       );
