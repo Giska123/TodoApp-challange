@@ -5,9 +5,6 @@
         "use": "@vercel/node"
       }
     ],
-    "env": {
-        "JSON_SERVER_PORT": "8004"
-    },
     "routes": [
       {
         "src": "api/(.*)",
