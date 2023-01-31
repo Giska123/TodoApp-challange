@@ -8,7 +8,7 @@ function MainActivity() {
   const [isSetTheme, setIsSetTheme] = useState(false)
 
   async function fetchDetails() {
-    const { data } = await axios.get('/api/data');
+    const { data } = await axios.get('https://todoapp-api-eight.vercel.app/');
     setActivities(data);
   }
 
@@ -31,7 +31,7 @@ function MainActivity() {
     });
 
     if(e.key === 'Enter') {
-      fetch('/api/data', {
+      fetch('https://todoapp-api-eight.vercel.app/', {
         method: "POST",
         body: json2,
         headers: {
@@ -54,7 +54,7 @@ function MainActivity() {
 
 
   const deleteActivity = (id) => {
-    fetch(`/api/data/${id}`, {
+    fetch(`https://todoapp-api-eight.vercel.app/${id}`, {
       method: "DELETE",
       headers: {
         "Content-type": "application/json",
@@ -88,7 +88,7 @@ function MainActivity() {
   function clearCompleted(){
     const completed = [...activities].filter(task => task.done)
     completed.map(tasks => 
-    fetch(`/api/data/${tasks.id}`, {
+    fetch(`https://todoapp-api-eight.vercel.app/${tasks.id}`, {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
     })
