@@ -9,7 +9,7 @@ function MainActivity() {
 
   async function fetchDetails() {
 
-  const response = await fetch('https://todoapp-api-eight.vercel.app/', {
+  const response = await fetch('https://todoapp-api-eight.vercel.app/activity/', {
   headers: {
     'Content-Type': 'application/json',
     'Authorization': 'Bearer <YOUR_AUTH_TOKEN>'
