@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import CardActivity from "../component/CardActivity";
-import axios from "axios";
 
 function MainActivity() {
   const [activities, setActivities] = useState([]);
