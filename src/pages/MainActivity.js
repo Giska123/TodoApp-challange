@@ -21,7 +21,7 @@ function MainActivity() {
     return;
   }
 
-  const data = await response.json();
+  await response.json();
     
   }
 
