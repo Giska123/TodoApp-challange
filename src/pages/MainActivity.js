@@ -8,8 +8,21 @@ function MainActivity() {
   const [isSetTheme, setIsSetTheme] = useState(false)
 
   async function fetchDetails() {
-    const { data } = await axios.get('https://todoapp-api-eight.vercel.app/');
-    setActivities(data);
+
+  const response = await fetch('https://todoapp-api-eight.vercel.app/', {
+  headers: {
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer <YOUR_AUTH_TOKEN>'
+  }
+  });
+
+  if (response.status === 401) {
+    console.error('Unauthorized, Please check your token');
+    return;
+  }
+
+  const data = await response.json();
+    
   }
 
   useEffect(() => {
