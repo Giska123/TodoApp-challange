@@ -44,7 +44,7 @@ function MainActivity() {
     });
 
     if(e.key === 'Enter') {
-      fetch('https://todoapp-api-eight.vercel.app/', {
+      fetch('https://todoapp-api-eight.vercel.app/activity/', {
         method: "POST",
         body: json2,
         headers: {
@@ -67,7 +67,7 @@ function MainActivity() {
 
 
   const deleteActivity = (id) => {
-    fetch(`https://todoapp-api-eight.vercel.app/${id}`, {
+    fetch(`https://todoapp-api-eight.vercel.app/activity/${id}`, {
       method: "DELETE",
       headers: {
         "Content-type": "application/json",
@@ -101,7 +101,7 @@ function MainActivity() {
   function clearCompleted(){
     const completed = [...activities].filter(task => task.done)
     completed.map(tasks => 
-    fetch(`https://todoapp-api-eight.vercel.app/${tasks.id}`, {
+    fetch(`https://todoapp-api-eight.vercel.app/activity/${tasks.id}`, {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
     })
