@@ -8,10 +8,13 @@ function MainActivity() {
 
   async function fetchDetails() {
 
-  const response = await fetch('https://todoapp-api-eight.vercel.app/activity/', {
+  const apiKey = "YOUR_VALID_API_KEY";
+
+
+  const response = await fetch('https://todoapp-api-eight.vercel.app/activity', {
   headers: {
     'Content-Type': 'application/json',
-    'Authorization': 'Bearer <YOUR_AUTH_TOKEN>'
+    'Authorization': 'Bearer ' + apiKey
   }
   });
 
@@ -43,7 +46,7 @@ function MainActivity() {
     });
 
     if(e.key === 'Enter') {
-      fetch('https://todoapp-api-eight.vercel.app/activity/', {
+      fetch('https://todoapp-api-eight.vercel.app/activity', {
         method: "POST",
         body: json2,
         headers: {
