@@ -48,7 +48,7 @@ function MainActivity() {
     });
 
     if(e.key === 'Enter') {
-      fetch('https://todoapp-api-eight.vercel.app/', {
+      fetch('https://todoapp-api-eight.vercel.app/activity', {
         method: "POST",
         body: json2,
         headers: {
