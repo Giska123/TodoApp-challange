@@ -8,24 +8,26 @@ function MainActivity() {
 
   async function fetchDetails() {
 
-  const apiKey = "YOUR_VALID_API_KEY";
-
-
-  const response = await fetch('https://todoapp-api-eight.vercel.app/', {
-  headers: {
+    const apiKey = "YOUR_VALID_API_KEY";
+    
+    try {
+    const response = await fetch('https://todoapp-api-eight.vercel.app/', {
+    headers: {
     'Content-Type': 'application/json',
     'Authorization': 'Bearer ' + apiKey
-  }
-  });
-
-  if (response.status === 401) {
+    }
+    });
+    if (response.status === 401) {
     console.error('Unauthorized, Please check your token');
     return;
-  }
-
-  await response.json();
+    }
+    const data = await response.json();
+    setActivities(data.activity);
+    } catch (error) {
+    console.error(error);
+    }
     
-  }
+    }
 
   useEffect(() => {
     fetchDetails();
