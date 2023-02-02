@@ -6,9 +6,9 @@ function MainActivity() {
   const [formValues, setFormValues] = useState({});
   const [isSetTheme, setIsSetTheme] = useState(false)
 
-  async function fetchDetails() {
+  const apiKey = "YOUR_VALID_API_KEY";
 
-    const apiKey = "YOUR_VALID_API_KEY";
+  async function fetchDetails() {
     
     try {
     const response = await fetch('https://todoapp-api-eight.vercel.app/', {
@@ -48,11 +48,12 @@ function MainActivity() {
     });
 
     if(e.key === 'Enter') {
-      fetch('https://todoapp-api-eight.vercel.app/', {
+      fetch('https://todoapp-api-eight.vercel.app/activity/', {
         method: "POST",
         body: json2,
         headers: {
           "Content-type": "application/json",
+          'Authorization': 'Bearer ' + apiKey
         },
       })
         .then((response) => {
@@ -71,10 +72,11 @@ function MainActivity() {
 
 
   const deleteActivity = (id) => {
-    fetch(`https://todoapp-api-eight.vercel.app/${id}`, {
+    fetch(`https://todoapp-api-eight.vercel.app/activity/${id}`, {
       method: "DELETE",
       headers: {
         "Content-type": "application/json",
+        'Authorization': 'Bearer ' + apiKey
       },
     })
       .then((response) => {
