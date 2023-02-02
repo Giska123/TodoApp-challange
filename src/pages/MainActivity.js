@@ -11,7 +11,7 @@ function MainActivity() {
   async function fetchDetails() {
     
     try {
-    const response = await fetch('https://todoapp-api-eight.vercel.app/', {
+    const response = await fetch('https://todoapp-api-eight.vercel.app/activity', {
     headers: {
     'Content-Type': 'application/json',
     'Authorization': 'Bearer ' + apiKey
@@ -48,7 +48,7 @@ function MainActivity() {
     });
 
     if(e.key === 'Enter') {
-      fetch('https://todoapp-api-eight.vercel.app/activity/', {
+      fetch('https://todoapp-api-eight.vercel.app/activity', {
         method: "POST",
         body: json2,
         headers: {
