@@ -11,7 +11,7 @@ function MainActivity() {
     const apiKey = "YOUR_VALID_API_KEY";
     
     try {
-    const response = await fetch('https://todoapp-api-eight.vercel.app/activity/', {
+    const response = await fetch('https://todoapp-api-eight.vercel.app/', {
     headers: {
     'Content-Type': 'application/json',
     'Authorization': 'Bearer ' + apiKey
@@ -22,7 +22,7 @@ function MainActivity() {
     return;
     }
     const data = await response.json();
-    setActivities(data);
+    setActivities(data.activity);
     } catch (error) {
     console.error(error);
     }
@@ -48,7 +48,7 @@ function MainActivity() {
     });
 
     if(e.key === 'Enter') {
-      fetch('https://todoapp-api-eight.vercel.app/activity', {
+      fetch('https://todoapp-api-eight.vercel.app/', {
         method: "POST",
         body: json2,
         headers: {
@@ -71,7 +71,7 @@ function MainActivity() {
 
 
   const deleteActivity = (id) => {
-    fetch(`https://todoapp-api-eight.vercel.app/activity/${id}`, {
+    fetch(`https://todoapp-api-eight.vercel.app/${id}`, {
       method: "DELETE",
       headers: {
         "Content-type": "application/json",
@@ -105,7 +105,7 @@ function MainActivity() {
   function clearCompleted(){
     const completed = [...activities].filter(task => task.done)
     completed.map(tasks => 
-    fetch(`https://todoapp-api-eight.vercel.app/activity/${tasks.id}`, {
+    fetch(`https://todoapp-api-eight.vercel.app/${tasks.id}`, {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
     })

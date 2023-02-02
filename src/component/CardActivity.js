@@ -5,10 +5,10 @@ function CardActivity({index, item, id, activities, setActivities, isSetTheme, f
 
 
     async function updateCheck() {
-      const response = await axios.get(`https://todoapp-api-eight.vercel.app/activity/${id}`);
+      const response = await axios.get(`https://todoapp-api-eight.vercel.app/${id}`);
       const item = response.data;
       const updatedCheck = { ...item, done: !item.done };
-      await axios.put(`https://todoapp-api-eight.vercel.app/activity/${id}`, updatedCheck);
+      await axios.put(`https://todoapp-api-eight.vercel.app/${id}`, updatedCheck);
       setActivities(
         activities.map(el => (el.id === id ? updatedCheck : el))
       );
