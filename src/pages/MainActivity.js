@@ -11,7 +11,7 @@ function MainActivity() {
   async function fetchDetails() {
     
     try {
-    const response = await fetch('https://todoapp-api-eight.vercel.app/activity', {
+    const response = await fetch('https://todoapp-api-eight.vercel.app/', {
     headers: {
     'Content-Type': 'application/json',
     'Authorization': 'Bearer ' + apiKey
@@ -22,8 +22,9 @@ function MainActivity() {
     return;
     }
     const data = await response.json();
-    setActivities(data.activity);
-    } catch (error) {
+    setActivities(data);
+    } 
+    catch (error) {
     console.error(error);
     }
     
@@ -48,7 +49,7 @@ function MainActivity() {
     });
 
     if(e.key === 'Enter') {
-      fetch('https://todoapp-api-eight.vercel.app/activity', {
+      fetch('https://todoapp-api-eight.vercel.app/', {
         method: "POST",
         body: json2,
         headers: {
@@ -56,23 +57,22 @@ function MainActivity() {
           'Authorization': 'Bearer ' + apiKey
         },
       })
-        .then((response) => {
-          if (response.status !== 201) {
-              return;
-          } else {
-              return response.json();
-          }
-        })
-        .then((data) => {
-          setActivities([...activities, data]);
-          fetchDetails();
-        })
-    }
+      .then((response) => {
+          return response.json();
+      })
+      .then((data) => {
+        setActivities([...activities, data]);
+        fetchDetails();
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+      }
   }
 
 
   const deleteActivity = (id) => {
-    fetch(`https://todoapp-api-eight.vercel.app/activity/${id}`, {
+    fetch(`https://todoapp-api-eight.vercel.app/${id}`, {
       method: "DELETE",
       headers: {
         "Content-type": "application/json",
@@ -82,6 +82,9 @@ function MainActivity() {
       .then((response) => {
         fetchDetails(response);
       })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
 
@@ -89,8 +92,10 @@ function MainActivity() {
   setIsSetTheme(!isSetTheme)
   }
 
-  const dataResult = 
-  activities.filter(task => task.id).length;
+  let dataResult;
+  if (activities) {
+    dataResult = activities.filter(task => task && task.id).length;
+    }
 
   function sortByActive(){
     setActivities([...activities].sort((a, b) => !b.done - !a.done));
