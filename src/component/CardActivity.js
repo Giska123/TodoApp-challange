@@ -78,7 +78,7 @@ function CardActivity({index, item, id, activities, setActivities, isSetTheme, f
                 </div>
 
                 <div className="delete-btn" data-cy="activity-item-delete-button" > 
-                  <button id='deleteIcon'
+                  <button id='deleteicon'
                     onClick={(e) => {
                         e.stopPropagation();
                         deleteActivity(item.id)}}> 
