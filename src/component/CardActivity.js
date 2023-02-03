@@ -73,12 +73,12 @@ function CardActivity({index, item, id, activities, setActivities, isSetTheme, f
                   <label className='checkbox-circle'>
                     <input className='check' type="checkbox" onClick={() => updateCheck(item.id)} defaultChecked={item.done} />
                     <span className='checkmark'></span>
+                    <p className="card-title" data-cy="activity-item-title">{item.task}</p>
                   </label>
-                  <p className="card-title" data-cy="activity-item-title">{item.task}</p>
                 </div>
 
                 <div className="delete-btn" data-cy="activity-item-delete-button" > 
-                  <button className='delete-icon'
+                  <button className='deleteIcon'
                     onClick={(e) => {
                         e.stopPropagation();
                         deleteActivity(item.id)}}> 

@@ -1,6 +1,6 @@
 
  
-   #header {
+   header {
       width: 100%;
       height: 28vh;
       color: var(--white-color);
@@ -12,28 +12,28 @@
       padding: 12% 8%;
    }
 
-      #header.dark {
+      header.dark {
          background-image: url('/src/asset/bg-mobile-dark.jpg');
       }
 
-      #header h1{
+      header h1{
          font-size: 30px;
          letter-spacing: 12px;
          text-transform: uppercase;
       }
 
-      .icon-switch {
+      .iconSwitch {
          height: fit-content;
       }
 
-   #main {
+   main {
       position: absolute;
       width: 100%;
       height: 72vh;
       background: var(--lightGrayishDay-color);
    }
 
-   #main.dark {
+   main.dark {
       background-color: var(--veryDarkGrayBlueNight-color);
    }
 
@@ -58,7 +58,7 @@
          display: flex;
       }
 
-         #main.dark .activity-head, #main.dark .activity-main, #main.dark .activity-footer, #main.dark .btn-sort {
+         main.dark .activity-head, main.dark .activity-main, main.dark .activity-footer, main.dark .btn-sort {
             background-color: hsl(235, 24%, 19%);
             color: var(--lightGrayBlueNight);
          }
@@ -116,7 +116,12 @@
             .checkbox-circle, .checkbox-disable {
                position: relative;
                display: inline-block;
+               width: 76%;
                margin: 0 15px;
+            }
+
+            .checkbox-disable {
+               width: 3%;
             }
             
             .checkbox-circle input[type="checkbox"], .checkbox-disable input[type="checkbox"] {
@@ -130,7 +135,6 @@
             .checkbox-circle .checkmark, .checkbox-disable .checkmark  {
                position: absolute;
                top: 50%;
-               left: 50%;
                transform: translate(-50%, -50%);
                height: 22px;
                width: 22px;
@@ -139,7 +143,7 @@
                border-radius: 50%;
             }
 
-            .card-activity.dark .checkbox-circle .checkmark, #main.dark .activity-head .checkbox-disable .checkmark  {
+            .card-activity.dark .checkbox-circle .checkmark, main.dark .activity-head .checkbox-disable .checkmark  {
                border: 1px solid var(--veryDarkGrayishBlueNight-color);
             }
             
@@ -172,7 +176,7 @@
                height: 100%;
                display: flex;
                align-items: center;
-               margin-left: 3%;
+               margin-left: 13%;
             }
 
             .delete-btn {
@@ -188,7 +192,7 @@
            }
 
 
-            .delete-icon svg {
+            .deleteIcon svg {
                color: var(--darkGray-color);
             }
 
@@ -200,7 +204,7 @@
          color: var(--darkGrayishBlueNight-color)
       }
 
-         #main.dark .activity-footer, #main.dark .activity-footer .btn-sort  {
+         main.dark .activity-footer, main.dark .activity-footer .btn-sort  {
             color: var(--veryDarkGrayishBlueNight2-color);
          }
 
@@ -212,7 +216,7 @@
             color: var(--veryDarkGrayishBlueDay-color);
          }
 
-         #main.dark .activity-footer span:hover{
+         main.dark .activity-footer span:hover{
             color: var(--lightGrayishBlueHover-color);
          }
 
@@ -249,21 +253,19 @@
          font-size: .6em;
          color: var(--darkGrayishBlueNight-color);
       }
-
-
    
 @media only screen and (min-width: 920px) {
 
-   #header {
+   header {
       padding: 7% 25% 10% 25%;
       background-image: url('/src/asset/bg-desktop-light.jpg');
    }
 
-      #header.dark {
+      header.dark {
          background-image: url('/src/asset/bg-desktop-dark.jpg');
       }
 
- #main {
+ main {
       height: 70vh;
    }
 
@@ -283,6 +285,10 @@
       .card-activity {
          padding: 3% 7%;
          cursor: pointer;
+      }
+
+      .checkbox-disable {
+         width: 6%;
       }
 
       .delete-btn {
