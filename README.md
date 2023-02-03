@@ -14,7 +14,6 @@ This is a solution to the [Todo app challenge on Frontend Mentor](https://www.fr
   - [Continued development](#continued-development)
   - [Useful resources](#useful-resources)
 - [Author](#author)
-- [Acknowledgments](#acknowledgments)
 
 
 ## Overview
@@ -68,16 +67,43 @@ for (const span of spans) {
           this.classList.add("active");
       });
   }
+
+    const handleDragStart = (e, index) => {
+      e.dataTransfer.setData("index", index);
+    };
+  
+    const handleDrop = (e, index) => {
+      e.preventDefault();
+      const dragIndex = e.dataTransfer.getData("index");
+      const dragActivity = activities[dragIndex];
+      let newActivities = [...activities];
+      newActivities.splice(dragIndex, 1);
+      newActivities.splice(index, 0, dragActivity);
+      setActivities(newActivities);
+    };
+  
+    const handleTouchStart = (e, index) => {
+      e.target.setAttribute("data-index", index);
+    };
+    
+    const handleTouchEnd = (e, index) => {
+      const dragIndex = e.target.getAttribute("data-index");
+      const dragActivity = activities[dragIndex];
+      let newActivities = [...activities];
+      newActivities.splice(dragIndex, 1);
+      newActivities.splice(index, 0, dragActivity);
+      setActivities(newActivities);
+    };
 ```
 
 
 ### Continued development
 
-Use this section to outline areas that you want to continue focusing on in future projects. These could be concepts you're still not completely comfortable with or techniques you found useful that you want to refine and perfect.
+i have learnt the concept about API, i want learn more about nested json, how to fetch them so can work properly. 
 
 ### Useful resources
 
-- [Example resource 1](https://www.example.com) - This helped me for XYZ reason. I really liked this pattern and will use it going forward.
+- [chatGPT]([https://www.example.com](https://openai.com/blog/chatgpt/)) - This helped me for understanding the problems and errors and how to learn and give understanding about the problem's and error's resolve.
 
 
 ## Author
@@ -85,8 +111,4 @@ Use this section to outline areas that you want to continue focusing on in futur
 - Website - [https://giska-portfolio.netlify.app/)
 - Frontend Mentor - [@yourusername](https://www.frontendmentor.io/profile/yourusername)
 
-
-## Acknowledgments
-
-This is where you can give a hat tip to anyone who helped you out on this project. Perhaps you worked in a team or got some inspiration from someone else's solution. This is the perfect place to give them some credit.
 
