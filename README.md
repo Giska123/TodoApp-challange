@@ -109,6 +109,6 @@ i have learnt the concept about API, i want learn more about nested json, how to
 ## Author
 
 - Website - [https://giska-portfolio.netlify.app/)
-- Frontend Mentor - [@yourusername](https://www.frontendmentor.io/profile/yourusername)
+- Frontend Mentor - [@Giska123]([https://www.frontendmentor.io/profile/yourusername](https://www.frontendmentor.io/profile/Giska123))
 
 
