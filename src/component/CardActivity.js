@@ -71,14 +71,14 @@ function CardActivity({index, item, id, activities, setActivities, isSetTheme, f
 
                 <div className='card-body'>
                   <label className='checkbox-circle'>
-                    <input id='check' className='check' type="checkbox" onClick={() => updateCheck(item.id)} defaultChecked={item.done} />
+                    <input className='check' type="checkbox" onClick={() => updateCheck(item.id)} defaultChecked={item.done} />
                     <span className='checkmark'></span>
                     <p className="card-title" data-cy="activity-item-title">{item.task}</p>
                   </label>
                 </div>
 
                 <div className="delete-btn" data-cy="activity-item-delete-button" > 
-                  <button id='deleteicon'
+                  <button className='deleteicon' aria-label='delete'
                     onClick={(e) => {
                         e.stopPropagation();
                         deleteActivity(item.id)}}> 

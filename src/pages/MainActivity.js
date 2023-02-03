@@ -140,7 +140,7 @@ function MainActivity() {
 
       <header className={isSetTheme ? "dark" : ""}>
         <h1 data-cy="activity-title">Todo </h1>
-        <button id="iconswitch" onClick={switchTheme}>
+        <button className="iconswitch" aria-label="switch" onClick={switchTheme}>
           {isSetTheme ?
             <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26">
               <path
@@ -165,7 +165,6 @@ function MainActivity() {
             <label className='checkbox-disable'>
                 <input className='check' type="checkbox" />
                 <span className="checkmark" ></span>
-            </label>
 
             <input
             type='text' 
@@ -175,6 +174,8 @@ function MainActivity() {
             autoFocus
             onKeyPress={(e) => handleKeyPress(e)}
             onChange={(e) => handleChangeTodo(e)}/> 
+            
+            </label>
           </div>
 
           <ul className='activity-main'>

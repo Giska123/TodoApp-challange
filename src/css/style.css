@@ -22,7 +22,7 @@
          text-transform: uppercase;
       }
 
-      #iconswitch {
+      .iconswitch {
          height: fit-content;
       }
 
@@ -64,7 +64,7 @@
          }
 
          .activity-head input {
-            margin-left: 1%;
+            margin-left: 13%;
             height: 100%;
             width: 100%;
             display: flex;
@@ -118,10 +118,6 @@
                display: inline-block;
                width: 76%;
                margin: 0 15px;
-            }
-
-            .checkbox-disable {
-               width: 3%;
             }
             
             .checkbox-circle input[type="checkbox"], .checkbox-disable input[type="checkbox"] {
@@ -192,7 +188,7 @@
            }
 
 
-            #deleteicon svg {
+            .deleteicon svg {
                color: var(--darkGray-color);
             }
 
@@ -285,10 +281,6 @@
       .card-activity {
          padding: 3% 7%;
          cursor: pointer;
-      }
-
-      .checkbox-disable {
-         width: 6%;
       }
 
       .delete-btn {
