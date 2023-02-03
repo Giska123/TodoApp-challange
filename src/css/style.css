@@ -22,7 +22,7 @@
          text-transform: uppercase;
       }
 
-      .iconSwitch {
+      #iconSwitch {
          height: fit-content;
       }
 
@@ -192,7 +192,7 @@
            }
 
 
-            .deleteIcon svg {
+            #deleteIcon svg {
                color: var(--darkGray-color);
             }
 
