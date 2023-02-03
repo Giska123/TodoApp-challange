@@ -71,7 +71,7 @@ function CardActivity({index, item, id, activities, setActivities, isSetTheme, f
 
                 <div className='card-body'>
                   <label className='checkbox-circle'>
-                    <input className='check' type="checkbox" onClick={() => updateCheck(item.id)} defaultChecked={item.done} />
+                    <input id='check' className='check' type="checkbox" onClick={() => updateCheck(item.id)} defaultChecked={item.done} />
                     <span className='checkmark'></span>
                     <p className="card-title" data-cy="activity-item-title">{item.task}</p>
                   </label>
