@@ -78,16 +78,9 @@
             color: var(--darkGrayishBlueNight-color);
          }
 
-         /* #main.dark .activity-head input::placeholder {
-            color: var(--darkGrayishBlueNight-color);
-         } */
-
 
       .activity-main {
          margin-top: 7%;
-         /* position: absolute;
-         top: -8%;
-         height: 70%; */
       }
 
          .card-activity {
