@@ -41,35 +41,42 @@ function MainActivity() {
     setFormValues({ ...formValues, [name]: value });
   }
 
+  
   function handleKeyPress(e) {
 
+    const existingActivity = activities.find(activity => activity.task === formValues.activity);
+    if (existingActivity) {
+      alert("Data already exists");
+      return;
+    }
+  
     const json2 = JSON.stringify({
       id: '',
       task : formValues.activity
     });
-
+  
     if(e.key === 'Enter') {
-      fetch('https://todoapp-api-eight.vercel.app/', {
+      fetch("http://localhost:8004/activity", {
         method: "POST",
         body: json2,
         headers: {
           "Content-type": "application/json",
-          'Authorization': 'Bearer ' + apiKey
         },
       })
-      .then((response) => {
-          return response.json();
-      })
-      .then((data) => {
-        setActivities([...activities, data]);
-        fetchDetails();
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-      }
+        .then((response) => {
+          if (response.status !== 201) {
+              return;
+          } else {
+              return response.json();
+          }
+        })
+        .then((data) => {
+          setActivities([...activities, data]);
+          fetchDetails();
+        })
+    }
   }
-
+  
 
   const deleteActivity = (id) => {
     fetch(`https://todoapp-api-eight.vercel.app/${id}`, {
