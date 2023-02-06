@@ -56,7 +56,7 @@ function MainActivity() {
     });
   
     if(e.key === 'Enter') {
-      fetch("http://localhost:8004/activity", {
+      fetch("https://todoapp-api-eight.vercel.app/", {
         method: "POST",
         body: json2,
         headers: {
@@ -64,11 +64,7 @@ function MainActivity() {
         },
       })
         .then((response) => {
-          if (response.status !== 201) {
-              return;
-          } else {
               return response.json();
-          }
         })
         .then((data) => {
           setActivities([...activities, data]);
